@@ -14,6 +14,10 @@ const app = express()
 
 app.use(express.json())
 
+app.get('/status', async (req, res) => {
+  return res.json({ 'status': 'ok' })
+})
+
 app.post('/input', async (req, res) => {
   const temperature = req.body?.temperature
   if (typeof temperature === "undefined" || temperature === null) {

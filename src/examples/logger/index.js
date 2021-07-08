@@ -17,6 +17,10 @@ viewer.use(express.json())
 
 let items = []
 
+app.get('/status', async (req, res) => {
+  return res.json({ 'status': 'ok' })
+})
+
 app.post('/input', (req, res) => {
   const count = items.push(req.body)
   console.log(`[pipeline] received message ${JSON.stringify(req.body)}`)
