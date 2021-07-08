@@ -1,0 +1,30 @@
+# Default values for celciusfarenheit.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: logger
+  pullPolicy: Never
+  tag: "v2"
+
+podAnnotations: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+  spectate_port: 8001
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,6 @@
+dependencies:
+- name: logger
+  repository: http://localhost:8080
+  version: 0.1.3
+digest: sha256:2658881c23b09bfdad43667b93dccb6f88866c03697dd71e0f57c2a967abf477
+generated: "2021-07-07T12:09:16.894905955+02:00"

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "celciusfarenheit.fullname" . }}-test-connection"
+  labels:
+    {{- include "celciusfarenheit.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "celciusfarenheit.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
