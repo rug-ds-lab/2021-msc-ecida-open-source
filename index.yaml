@@ -5,6 +5,22 @@ entries:
       test: hello
     apiVersion: v2
     appVersion: v1
+    created: "2021-07-13T10:27:07.642697566Z"
+    dependencies:
+    - name: logger
+      repository: https://rug-ds-lab.github.io/2021-msc-ecida-open-source
+      version: 0.1.3
+    description: A Helm chart for Kubernetes
+    digest: e256d356b54f449d132f5b025c2dbb81d37b971ec11f836af7f7026512034bc0
+    name: celciusfarenheit
+    type: application
+    urls:
+    - https://rug-ds-lab.github.io/2021-msc-ecida-open-source/celciusfarenheit-0.1.7.tgz
+    version: 0.1.7
+  - annotations:
+      test: hello
+    apiVersion: v2
+    appVersion: v1
     created: "2021-07-07T13:21:21.435291108+02:00"
     dependencies:
     - name: logger
@@ -98,13 +114,13 @@ entries:
       test: hello
     apiVersion: v2
     appVersion: v1
-    created: "2021-07-07T13:21:21.43716949+02:00"
+    created: "2021-07-13T10:27:07.643063771Z"
     description: The logger endpoint for a hello-world pipeline
-    digest: 9c432e560562139cf901bf5f7d11d9390860332d82848784f96cec96cb9c1333
+    digest: c2d64ee6b683027ee4f6b11e9e8a9a861e427206202371a40b745e52ff470ab9
     name: logger
     type: application
     urls:
-    - logger-0.1.3.tgz
+    - https://rug-ds-lab.github.io/2021-msc-ecida-open-source/logger-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v2
     appVersion: v0
@@ -136,6 +152,17 @@ entries:
     urls:
     - logger-0.1.0.tgz
     version: 0.1.0
+  newchart:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-07-13T10:27:07.643618178Z"
+    description: A Helm chart for Kubernetes
+    digest: b1943af0ee9bdd1e4564923c8b2b03f327f6fd9ac8ff64812de6955fec947d33
+    name: newchart
+    type: application
+    urls:
+    - https://rug-ds-lab.github.io/2021-msc-ecida-open-source/newchart-0.1.0.tgz
+    version: 0.1.0
   testing:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -147,4 +174,4 @@ entries:
     urls:
     - testing-0.1.0.tgz
     version: 0.1.0
-generated: "2021-07-07T13:21:21.427350068+02:00"
+generated: "2021-07-13T10:27:07.641629552Z"
