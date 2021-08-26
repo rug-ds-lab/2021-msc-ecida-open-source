@@ -25,3 +25,4 @@ appVersion: "v1"
 
 annotations:
   test: "hello"
+  ecida.module: "yes"
