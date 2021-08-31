@@ -1,4 +1,4 @@
-module ecida-cli
+module ecida
 
 go 1.16
 
