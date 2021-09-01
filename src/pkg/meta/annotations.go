@@ -1,7 +1,7 @@
 package meta
 
-type ChartAnnotations map[string]string
+type Annotations map[string]string
 
-func CreateAnnotations() ChartAnnotations {
-    return make(ChartAnnotations)
+func CreateAnnotations() Annotations {
+    return make(Annotations)
 }
