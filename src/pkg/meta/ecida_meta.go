@@ -10,7 +10,7 @@ func NewEcidaMetadata() EcidaMetadata {
     return make(map[string]string)
 }
 
-func (emeta *EcidaMetadata) ToChartMetadata() ChartAnnotations {
+func (emeta *EcidaMetadata) ToChartAnnotations() ChartAnnotations {
     chartMeta := make(ChartAnnotations)
 
     for key, value := range *emeta {

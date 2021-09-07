@@ -20,7 +20,7 @@ func NewEcidaChart(name string) *chart.Metadata {
         APIVersion: "v2",
         Version: "0.1.0",
         Type: "application",
-        Annotations: metadata.ToChartMetadata(),
+        Annotations: metadata.ToChartAnnotations(),
     }
 }
 
