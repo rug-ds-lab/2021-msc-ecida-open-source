@@ -10,11 +10,11 @@ import (
 
 func init() {
 	cmdPublish := &cobra.Command{
-		Use:   "publish",
+		Use:   "publish <package.gz>",
 		Short: "publish a package",
+        Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-
-			return nil
+			return publishCmd(args[0])
 		},
 	}
 
