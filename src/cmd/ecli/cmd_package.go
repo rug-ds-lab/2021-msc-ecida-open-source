@@ -17,9 +17,9 @@ func init() {
 	cmdPackage := &cobra.Command{
 		Use:   "package [chart]",
 		Short: "packages an ECiDA module",
-        Long: `Packages a module found in [chart]. Defaults to working directory. Follows the
+		Long: `Packages a module found in [chart]. Defaults to working directory. Follows the
 Helm naming convention where the packaged name will be chart-version.gz`,
-        Args: cobra.MaximumNArgs(1),
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			var chart string

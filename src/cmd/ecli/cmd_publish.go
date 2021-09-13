@@ -12,7 +12,7 @@ func init() {
 	cmdPublish := &cobra.Command{
 		Use:   "publish <package.gz>",
 		Short: "publish a package",
-        Args: cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return publishCmd(args[0])
 		},

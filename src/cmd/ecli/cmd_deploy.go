@@ -11,12 +11,12 @@ func init() {
 	cmdDeploy := &cobra.Command{
 		Use:   "deploy <pipeline> <root-package>",
 		Short: "deploy an ECiDA module to Kubernetes",
-        Long: `Deploy an ECiDA module to Kubernetes using the Helm structure.`,
-        Args: cobra.ExactArgs(2),
+		Long:  `Deploy an ECiDA module to Kubernetes using the Helm structure.`,
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-            pipelineName := args[0]
-            packageFile := args[1]
+			pipelineName := args[0]
+			packageFile := args[1]
 
 			return deployCmd(pipelineName, packageFile)
 		},
@@ -27,17 +27,17 @@ func init() {
 
 func deployCmd(pipelineName string, rootChart string) error {
 
-    deps, err := depsresolver.FindDependencies(rootChart)
+	deps, err := depsresolver.FindDependencies(rootChart)
 
-    if err != nil {
-        return fmt.Errorf("unresolved dependencies for %s: %w\n", pipelineName, err)
-    }
+	if err != nil {
+		return fmt.Errorf("unresolved dependencies for %s: %w\n", pipelineName, err)
+	}
 
-    for _, dep := range deps {
-        fmt.Printf("%+v\n", dep.Values)
-    }
+	for _, dep := range deps {
+		fmt.Printf("%+v\n", dep.Values)
+	}
 
-    // deploy everything in deps to kubernetes
+	// deploy everything in deps to kubernetes
 
-    return nil
+	return nil
 }

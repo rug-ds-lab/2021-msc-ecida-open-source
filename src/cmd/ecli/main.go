@@ -13,7 +13,7 @@ var (
 )
 
 func main() {
-    // The init() funciton in each of the cmd_ files in this package add
-    // commands to the cobra rootCmd.
+	// The init() funciton in each of the cmd_ files in this package add
+	// commands to the cobra rootCmd.
 	rootCmd.Execute()
 }

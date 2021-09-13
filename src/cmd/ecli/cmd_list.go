@@ -10,22 +10,24 @@ import (
 )
 
 func init() {
-    rootCmd.AddCommand(&cobra.Command{
-        Use: "list [chart]",
-        Short: "List properties in chart",
-        Long: "List properties in chart. Defaults to current working directory.",
-        RunE: func (cmd *cobra.Command, args []string) error {
-            var(workDir string)
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "list [chart]",
+		Short: "List properties in chart",
+		Long:  "List properties in chart. Defaults to current working directory.",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var (
+				workDir string
+			)
 
-            if len(args) == 0 {
-                workDir, _ = os.Getwd()
-            } else {
-                workDir = args[0]
-            }
+			if len(args) == 0 {
+				workDir, _ = os.Getwd()
+			} else {
+				workDir = args[0]
+			}
 
-            return listCmd(workDir)
-        },
-    })
+			return listCmd(workDir)
+		},
+	})
 }
 
 func listCmd(chart string) error {
