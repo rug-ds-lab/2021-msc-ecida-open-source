@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ecida/pkg/deployment"
 	"ecida/pkg/depsresolver"
 	"fmt"
 
@@ -38,6 +39,11 @@ func deployCmd(pipelineName string, rootChart string) error {
 	}
 
 	// deploy everything in deps to kubernetes
+	err = deployment.Deploy(pipelineName, deps)
+
+	if err != nil {
+		return fmt.Errorf("failed to deploy %s: %w\n", pipelineName, err)
+	}
 
 	return nil
 }

@@ -2,6 +2,7 @@ package depsresolver
 
 import (
 	"ecida/pkg/meta"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -32,20 +33,28 @@ func readChartFromPath(path string) (*chart.Chart, error) {
 	return loader.Load(path)
 }
 
-func makeConnectString(chart *chart.Chart) string {
+func makeConnectString(chart *chart.Chart) (string, error) {
 	// inspect the service block in the values to read the name and port
 	svc, svcexists := chart.Values["service"]
 
 	if !svcexists {
-		return ""
+		return "", errors.New("service block is not defined in values.yaml")
 	}
 
-	// TODO: type checking and proper parsing
-	service := svc.(map[string]interface{})
+	service, ismap := svc.(map[string]interface{})
 
-	name := service["name"].(string)
-	port := service["port"].(string)
-	return fmt.Sprintf("%s:%s", name, port)
+	if !ismap {
+		return "", errors.New("service is not a block in values.yaml")
+	}
+
+	name, namevalid := service["name"].(string)
+	port, portvalid := service["port"].(string)
+
+	if !namevalid || !portvalid {
+		return "", errors.New("service.name and service.port must be strings in values.yaml")
+	}
+
+	return fmt.Sprintf("%s:%s", name, port), nil
 }
 
 func FindDependencies(root string) ([]*chart.Chart, error) {
@@ -66,7 +75,11 @@ func FindDependencies(root string) ([]*chart.Chart, error) {
 		childDeps, err := FindDependencies(newPath)
 
 		for _, childDep := range childDeps {
-			rootChart.Values[depName] = makeConnectString(childDep)
+			connectStr, err := makeConnectString(childDep)
+			if err != nil {
+				return nil, fmt.Errorf("failed to resolve dependency for %s: %w\n", newPath, err)
+			}
+			rootChart.Values[depName] = connectStr
 		}
 
 		if err != nil {
