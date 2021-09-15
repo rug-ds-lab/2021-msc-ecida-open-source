@@ -60,6 +60,8 @@ func deploySingle(pipeline string, chart *chart.Chart, path string) error {
 		return fmt.Errorf("failed to apply helm configuration: %w", err)
 	}
 
+	return nil
+
 	// remove the temporary archive
 	err = os.Remove(path)
 

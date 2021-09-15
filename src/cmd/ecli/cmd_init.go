@@ -1,63 +1,58 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 
-	"ecida/pkg/meta"
+	"ecida/pkg/modulegen"
 
 	"github.com/spf13/cobra"
-	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/chartutil"
-)
-
-var (
-	initLocation string
 )
 
 func init() {
 	cmdInit := &cobra.Command{
-		Use:   "init <name>",
+		Use:   "init [name]",
 		Short: "Initialise a new ECiDA module",
-		Long:  "Initialise a new ECiDA module as a Helm chart in the current working directory",
-		Args:  cobra.ExactArgs(1),
+		Long:  "Initialise a new ECiDA module in a directory, or in current directory",
+		Args:  cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			name := args[0]
-			return initCmd(name, initLocation)
+			cwd, _ := os.Getwd()
+
+			if len(args) == 1 {
+				err := makeDirIfNotExists(args[0])
+
+				if err != nil {
+					return err
+				}
+
+				path := filepath.Join(cwd, args[0])
+
+				return initCmd(args[0], path)
+			} else {
+				_, name := filepath.Split(cwd)
+
+				return initCmd(name, cwd)
+			}
 		},
 	}
-
-	cmdInit.Flags().StringVarP(&initLocation, "directory", "d", "", "directory in which to initialise the module")
 
 	rootCmd.AddCommand(cmdInit)
 }
 
-func NewEcidaChart(name string) *chart.Metadata {
-	metadata := meta.NewEcidaMetadata()
+func makeDirIfNotExists(name string) error {
+	_, err := os.Stat(name)
 
-	metadata["ischart"] = "true"
-
-	return &chart.Metadata{
-		Name:        name,
-		Description: fmt.Sprintf("The %s ECiDA helmchart chart", name),
-		APIVersion:  "v2",
-		Version:     "0.1.0",
-		Type:        "application",
-		Annotations: metadata.ToChartAnnotations(),
+	if !os.IsNotExist(err) {
+		return errors.New(fmt.Sprintf("%s already exists", name))
 	}
+
+	return os.Mkdir(name, os.ModePerm)
 }
 
 func initCmd(name string, dirname string) error {
-	fmt.Printf("initting %s and %s\n", name, dirname)
+	fmt.Printf("initialising new module %s in %s\n", name, dirname)
 
-	path, err := chartutil.Create(name, dirname)
-
-	if err != nil {
-		return fmt.Errorf("failed to create new chart: %w", err)
-	}
-
-	chartfile := fmt.Sprintf("%s/Chart.yaml", path)
-
-	cf := NewEcidaChart(name)
-
-	return chartutil.SaveChartfile(chartfile, cf)
+	return modulegen.GenerateModule(name, dirname)
 }
