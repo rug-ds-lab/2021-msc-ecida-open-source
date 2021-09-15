@@ -27,7 +27,7 @@ app.post('/input', async (req, res) => {
 
   const farenheit = temperature * (9 / 5) + 32
 
-  fetch(`http://${sink}`, {
+  fetch(`http://${sink}/input`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

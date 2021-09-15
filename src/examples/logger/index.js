@@ -29,13 +29,18 @@ app.post('/input', (req, res) => {
 
 viewer.get('/', (req, res) => {
   console.log(`[spectate] showing ${items.length} items`)
-  return res.json(JSON.stringify(items))
+  return res.json(items)
 })
 
-app.listen(appPort, () => {
+const appserver = app.listen(appPort, () => {
   console.log(`Started the pipeline server on port ${appPort}`)
 })
 
-viewer.listen(spectatePort, () => {
+const viewerserver = viewer.listen(spectatePort, () => {
   console.log(`Started the spectate server on port ${spectatePort}`)
+})
+
+process.on('SIGINT', () => {
+    appserver.close()
+    viewerserver.close()
 })
