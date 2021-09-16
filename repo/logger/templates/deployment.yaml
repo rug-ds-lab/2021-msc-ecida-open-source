@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "logger.fullname" . }}
+  name: {{ .Values.service.name }}
   labels:
     {{- include "logger.labels" . | nindent 4 }}
 spec:

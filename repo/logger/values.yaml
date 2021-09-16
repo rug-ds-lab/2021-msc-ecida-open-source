@@ -13,7 +13,8 @@ podAnnotations: {}
 
 service:
   type: ClusterIP
-  port: 8000
+  name: 'logger'
+  port: '8000'
   spectate_port: 8001
 
 autoscaling:
