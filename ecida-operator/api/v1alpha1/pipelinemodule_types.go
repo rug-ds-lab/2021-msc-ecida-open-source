@@ -28,14 +28,16 @@ type PipelineModuleSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	Image string `json:"image"`
-	Port  uint32 `json:"port"`
+	Image   string   `json:"image"`
+	Port    int32    `json:"port"`
+	Command []string `json:"command"`
 }
 
 // PipelineModuleStatus defines the observed state of PipelineModule
 type PipelineModuleStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Nodes []string `json:"nodes"`
 }
 
 //+kubebuilder:object:root=true
