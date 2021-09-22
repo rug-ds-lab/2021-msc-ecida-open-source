@@ -2,6 +2,9 @@ apiVersion: ecida.researchable.nl/v1alpha1
 kind: PipelineModule
 metadata:
   name: pipelinemodule-sample
+  namespace: testing
 spec:
   # Add fields here
-  foo: bar
+  image: maxverbeek/logger:latest
+  port: 3000
+  command: ["yarn", "start"]

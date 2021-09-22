@@ -84,7 +84,7 @@ func (r *PipelineModuleReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	if err != nil {
 		if errors.IsNotFound(err) {
 			// The deployment does not yet exist, create it
-			depSpec := r.deploymentSpecPM(pipelineModule)
+			depSpec := r.deploymentSpecPM(pipelineModule, req.NamespacedName)
 			log.Info("Creating new deployment", "Deployment.Namespace", dep.Namespace, "Deployment.Name", depSpec.Name)
 			err = r.Create(ctx, depSpec)
 			if err != nil {
@@ -181,16 +181,16 @@ func (r *PipelineModuleReconciler) pipelineModuleLabels(name string) map[string]
 	}
 }
 
-func (r *PipelineModuleReconciler) deploymentSpecPM(pipelineModule *ecidav1alpha.PipelineModule) *appsv1.Deployment {
+func (r *PipelineModuleReconciler) deploymentSpecPM(pipelineModule *ecidav1alpha.PipelineModule, moduleName types.NamespacedName) *appsv1.Deployment {
+	fullName := r.pipelineModuleDepName(moduleName)
 	image := pipelineModule.Spec.Image
 	port := pipelineModule.Spec.Port
-	command := pipelineModule.Spec.Command
 	replicas := int32(1) // Take care of listing the pods when changing this
 
 	labels := r.pipelineModuleLabels(pipelineModule.Name)
 
 	deployment := &appsv1.Deployment{
-		ObjectMeta: metav1.ObjectMeta{Name: pipelineModule.Name, Namespace: pipelineModule.Namespace},
+		ObjectMeta: metav1.ObjectMeta{Name: fullName.Name, Namespace: fullName.Namespace},
 		Spec: appsv1.DeploymentSpec{
 			Replicas: &replicas,
 			Selector: &metav1.LabelSelector{
@@ -200,9 +200,8 @@ func (r *PipelineModuleReconciler) deploymentSpecPM(pipelineModule *ecidav1alpha
 				ObjectMeta: metav1.ObjectMeta{Labels: labels},
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{{
-						Image:   image,
-						Name:    pipelineModule.Name,
-						Command: command,
+						Image: image,
+						Name:  pipelineModule.Name,
 						Ports: []corev1.ContainerPort{{
 							ContainerPort: int32(port),
 						}},
