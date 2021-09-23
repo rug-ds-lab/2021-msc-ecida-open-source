@@ -1,0 +1,7 @@
+apiVersion: ecida.researchable.nl/v1alpha1
+kind: PipelineModule
+metadata:
+  name: {{ include "doesitwork.fullname" . }}
+spec:
+  image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+  port: {{ .Values.image.port }}

@@ -1,0 +1,5 @@
+# Configuration on the image associated with this ECiDA module
+image:
+  port: "3000"
+  repository: "maxverbeek/doesitwork"
+  tag: "latest"
