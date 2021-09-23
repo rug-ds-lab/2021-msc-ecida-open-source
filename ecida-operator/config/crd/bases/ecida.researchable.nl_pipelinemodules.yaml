@@ -13,6 +13,8 @@ spec:
     kind: PipelineModule
     listKind: PipelineModuleList
     plural: pipelinemodules
+    shortNames:
+    - pm
     singular: pipelinemodule
   scope: Namespaced
   versions:
@@ -41,12 +43,13 @@ spec:
                   type: string
                 type: array
               image:
+                description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                  Important: Run "make" to regenerate code after modifying this file'
                 type: string
               port:
                 format: int32
                 type: integer
             required:
-            - command
             - image
             - port
             type: object

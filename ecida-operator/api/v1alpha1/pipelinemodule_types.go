@@ -27,10 +27,9 @@ import (
 type PipelineModuleSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-
 	Image   string   `json:"image"`
 	Port    int32    `json:"port"`
-	Command []string `json:"command"`
+	Command []string `json:"command,omitempty"`
 }
 
 // PipelineModuleStatus defines the observed state of PipelineModule
@@ -41,6 +40,7 @@ type PipelineModuleStatus struct {
 }
 
 //+kubebuilder:object:root=true
+//+kubebuilder:resource:shortName="pm"
 //+kubebuilder:subresource:status
 
 // PipelineModule is the Schema for the pipelinemodules API
