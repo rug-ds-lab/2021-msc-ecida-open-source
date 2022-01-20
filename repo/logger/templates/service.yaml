@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "logger.fullname" . }}
+  labels:
+    {{- include "logger.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.spectate_port }}
+      targetPort: http-spectate
+      protocol: TCP
+      name: http-spectate
+  selector:
+    {{- include "logger.selectorLabels" . | nindent 4 }}

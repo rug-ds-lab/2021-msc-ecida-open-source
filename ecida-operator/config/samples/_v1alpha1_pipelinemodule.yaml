@@ -1,0 +1,8 @@
+apiVersion: ecida.researchable.nl/v1alpha1
+kind: PipelineModule
+metadata:
+  name: pipelinemodule-sample
+spec:
+  # Add fields here
+  image: maxverbeek/doesitwork:latest
+  port: 3000
